@@ -16,6 +16,7 @@ function Register() {
     try {
       const response= await apiRequest.post("/auth/register",{username,email,password})
       console.log(response.data);
+      localStorage.setItem("user",JSON.stringify(response.data))
       navigate("/login")
     } catch (error) {
       console.log(error);

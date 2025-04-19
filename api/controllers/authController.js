@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 export const register=async(req,res)=>{
     try {
         const {username,email,password}= req.body;
-        
+        console.log(req.body)
         // Validate required fields
         if(!username || !email || !password) {
             return res.status(400).json({message: "Username, email and password are required"});
@@ -52,7 +52,7 @@ export const login=async(req,res)=>{
 
        const token= jwt.sign({
         id:user.id,
-        isAdmin:false,
+        isAdmin:true,
        },
     process.env.JWT_SECRET,
 {expiresIn: 1000 * 60*60 *24 *7})

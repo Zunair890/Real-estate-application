@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "./login.scss";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import apiRequest from "../../lib/apiRequest.js";
+import { AuthContext } from "../../../context/AuthContext.jsx";
 
 function Login() {
   const [error,setError]= useState("")
+
+  const {updateUser}= useContext(AuthContext)
   const [loading,setLoading]= useState(false);
   const navigate= useNavigate();
   const handleSubmit=async(e)=>{
@@ -20,13 +23,13 @@ function Login() {
       const response= await apiRequest.post("/auth/login",{username,password})
       console.log(response.data);
       
-      localStorage.setItem("user",JSON.stringify(response.data));
+      updateUser(response.data)
       navigate("/")
 
     } catch (error) {
       console.log(error);
        setError(error.response.data.message)
-    }
+    } 
     finally{
       setLoading(false);
     }
